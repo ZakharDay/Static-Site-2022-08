@@ -1,1 +1,1 @@
-console.log('Yo')
+import './index.css'
