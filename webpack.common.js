@@ -8,7 +8,8 @@ const path = require('path')
 
 module.exports = {
   entry: {
-    index: './src/index.js'
+    index: './src/index.js',
+    htmlcss: './src/htmlcss.js'
   },
   output: {
     filename: '[name].[contenthash].js',
@@ -66,14 +67,7 @@ module.exports = {
         type: 'asset/source'
       },
       {
-        test: /\.png/,
-        type: 'asset/resource',
-        generator: {
-          filename: 'images/[hash][ext][query]'
-        }
-      },
-      {
-        test: /\.svg/,
+        test: /\.(png|svg|jpg|jpeg)/,
         type: 'asset/resource',
         generator: {
           filename: 'images/[hash][ext][query]'
@@ -97,34 +91,64 @@ module.exports = {
     // Index
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      filename: './index.html'
+      filename: './index.html',
+      chunks: ['index']
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/simplegrid.html',
+      filename: './simplegrid.html',
+      chunks: ['index']
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/modulargrid.html',
+      filename: './modulargrid.html',
+      chunks: ['index']
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/complexgrid.html',
+      filename: './complexgrid.html',
+      chunks: ['index']
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/htmlcss.html',
+      filename: './htmlcss.html',
+      chunks: ['htmlcss']
     }),
 
     new HtmlWebpackPlugin({
       template: './src/about.html',
-      filename: './about.html'
+      filename: './about.html',
+      chunks: ['index']
     }),
 
     // Articles
     new HtmlWebpackPlugin({
       template: './src/spaceships.html',
-      filename: './spaceships.html'
+      filename: './spaceships.html',
+      chunks: ['index']
     }),
 
     new HtmlWebpackPlugin({
       template: './src/spaceobjects.html',
-      filename: './spaceobjects.html'
+      filename: './spaceobjects.html',
+      chunks: ['index']
     }),
 
     // Article
     new HtmlWebpackPlugin({
       template: './src/spaceships/buran.html',
-      filename: './spaceships/buran.html'
+      filename: './spaceships/buran.html',
+      chunks: ['index']
     }),
 
     new HtmlWebpackPlugin({
       template: './src/spaceobjects/moon.html',
-      filename: './spaceobjects/moon.html'
+      filename: './spaceobjects/moon.html',
+      chunks: ['index']
     }),
 
     // Partials
