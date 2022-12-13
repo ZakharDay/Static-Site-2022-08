@@ -14,6 +14,7 @@ module.exports = {
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'docs')
+    // clear: true
   },
   module: {
     rules: [
@@ -110,6 +111,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/complexgrid.html',
       filename: './complexgrid.html',
+      chunks: ['index']
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/ui.html',
+      filename: './ui.html',
       chunks: ['index']
     }),
 
