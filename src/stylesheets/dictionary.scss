@@ -1,0 +1,22 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: 'PT Root UI', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  background-color: var(--almost-black);
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
