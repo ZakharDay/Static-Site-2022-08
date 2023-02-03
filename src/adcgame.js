@@ -21,17 +21,18 @@ function showMessage(message) {
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
-  showMessage(messages[0])
+  let timeout = 2000
 
-  setTimeout(() => {
-    showMessage(messages[1])
-  }, 2000)
+  messages.forEach((message, i) => {
+    if (i == 0) {
+      showMessage(message)
+    } else {
+      setTimeout(() => {
+        showMessage(message)
+      }, timeout)
 
-  setTimeout(() => {
-    showMessage(messages[2])
-  }, 4000)
-
-  setTimeout(() => {
-    showMessage(messages[3])
-  }, 6000)
+      // timeout = timeout + 2000
+      timeout += 2000
+    }
+  })
 })
