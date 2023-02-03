@@ -10,7 +10,8 @@ module.exports = {
   entry: {
     index: './src/index.js',
     htmlcss: './src/htmlcss.js',
-    dictionary: './src/dictionary.js'
+    dictionary: './src/dictionary.js',
+    jsbasics: './src/jsbasics.js'
   },
   output: {
     filename: '[name].[contenthash].js',
@@ -137,6 +138,12 @@ module.exports = {
       template: './src/dictionary.html',
       filename: './dictionary.html',
       chunks: ['dictionary']
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/jsbasics.html',
+      filename: './jsbasics.html',
+      chunks: ['jsbasics']
     }),
 
     // Articles
