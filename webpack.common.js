@@ -11,7 +11,8 @@ module.exports = {
     index: './src/index.js',
     htmlcss: './src/htmlcss.js',
     dictionary: './src/dictionary.js',
-    jsbasics: './src/jsbasics.js'
+    jsbasics: './src/jsbasics.js',
+    adcgame: './src/adcgame.js'
   },
   output: {
     filename: '[name].[contenthash].js',
@@ -144,6 +145,12 @@ module.exports = {
       template: './src/jsbasics.html',
       filename: './jsbasics.html',
       chunks: ['jsbasics']
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/adcgame.html',
+      filename: './adcgame.html',
+      chunks: ['adcgame']
     }),
 
     // Articles
