@@ -1,71 +1,62 @@
 import './adcgame.css'
 
-console.error('=====================')
-//
-//
-//
-
-const messageGroups = [
-  {
-    questions: [
-      'Ghbdtn! Rfr ltkf?',
-      'Ой',
-      'Привет! Как дела?',
-      'Ладно, знаешь меня?'
-    ],
-    answers: ['Да', 'Нет']
-  },
-  {
-    questions: [
-      'Хей! приветствую тебя из глубин интернета',
-      'Ты ведь не знаешь кто я, верно?'
-    ],
-    answers: ['Вообще-то знаю', 'Нет']
-  },
-  {
-    questions: [
-      'О, как хорошо, что ты заглянул',
-      'Кажется, мы уже встречались?',
-      'На вечеринке... Ну этого... того '
-    ],
-    answers: ['Ну точно, было', 'Ты меня с кем-то путаешь']
-  },
-  {
-    questions: ['ЙОУ', 'ДИП!', 'РЭП'],
-    answers: ['ДИП!', 'ЭЭЭ, ЧТО?']
-  }
-]
+import { speed, stages } from './adcgame/model.js'
 
 function sample(array) {
   return array[Math.floor(Math.random() * array.length)]
 }
 
-function showQuestions() {
+function showTexting(wrapper) {
+  const element = document.createElement('div')
+  element.innerText = '...'
+  element.classList.add('texting')
+
+  wrapper.appendChild(element)
+}
+
+function removeTexting() {
+  const texting = document.getElementsByClassName('texting')[0]
+  texting.remove()
+}
+
+function showQuestions(stage) {
   const wrapper = document.createElement('div')
   wrapper.classList.add('questionsWrapper')
 
-  const messageGroup = sample(messageGroups)
-  let timeout = 2000
+  const stageContent = sample(stages[stage])
+  let timeout = speed
 
-  messageGroup.questions.forEach((message, i) => {
-    if (i == 0) {
-      showQuestion(wrapper, message)
-    } else {
-      if (i + 1 == messageGroup.questions.length) {
-        setTimeout(() => {
-          showQuestion(wrapper, message)
-          showAnswers(messageGroup.answers)
-        }, timeout)
+  if (stageContent.questions.length === 1) {
+    const question = stageContent.questions[0]
+    showQuestion(wrapper, question)
+
+    setTimeout(() => {
+      showAnswersOrNextStage(stageContent)
+    }, 1000)
+  } else {
+    stageContent.questions.forEach((question, i) => {
+      if (i == 0) {
+        showQuestion(wrapper, question)
+        showTexting(wrapper)
       } else {
-        setTimeout(() => {
-          showQuestion(wrapper, message)
-        }, timeout)
+        if (i + 1 == stageContent.questions.length) {
+          setTimeout(() => {
+            removeTexting()
+            showQuestion(wrapper, question)
+            showAnswersOrNextStage(stageContent)
+          }, timeout)
+        } else {
+          setTimeout(() => {
+            removeTexting()
+            showQuestion(wrapper, question)
+            showTexting(wrapper)
+          }, timeout)
 
-        // timeout = timeout + 2000
-        timeout += 2000
+          timeout += speed
+        }
       }
-    }
-  })
+    })
+  }
 
   document.body.appendChild(wrapper)
 }
@@ -78,19 +69,25 @@ function showQuestion(wrapper, question) {
   wrapper.appendChild(element)
 }
 
+function showAnswersOrNextStage(stageContent) {
+  if (stageContent.answers) {
+    showAnswers(stageContent.answers)
+  } else {
+    showQuestions(stageContent.stage)
+  }
+}
+
 function showAnswers(answers) {
   const wrapper = document.createElement('div')
   wrapper.classList.add('answersWrapper')
 
   answers.forEach((answer, i) => {
     const element = document.createElement('div')
-    element.innerText = answer
+    element.innerText = answer.text
     element.classList.add('answer')
 
     element.addEventListener('click', () => {
-      console.log(answer)
-
-      showQuestions()
+      showQuestions(answer.stage)
     })
 
     wrapper.appendChild(element)
@@ -100,5 +97,5 @@ function showAnswers(answers) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  showQuestions()
+  showQuestions('stage1')
 })
