@@ -6,45 +6,99 @@ console.error('=====================')
 //
 
 const messageGroups = [
-  ['Ghbdtn! Rfr ltkf?', 'Ой', 'Привет! Как дела?', 'Ладно, знаешь меня?'],
-  [
-    'Хей! приветствую тебя из глубин интернета',
-    'Ты ведь не знаешь кто я, верно?'
-  ],
-  [
-    'О, как хорошо, что ты заглянул',
-    'Кажется, мы уже встречались?',
-    'На вечеринке... Ну этого... того '
-  ],
-  ['ЙОУ', 'ДИП!', 'РЭП']
+  {
+    questions: [
+      'Ghbdtn! Rfr ltkf?',
+      'Ой',
+      'Привет! Как дела?',
+      'Ладно, знаешь меня?'
+    ],
+    answers: ['Да', 'Нет']
+  },
+  {
+    questions: [
+      'Хей! приветствую тебя из глубин интернета',
+      'Ты ведь не знаешь кто я, верно?'
+    ],
+    answers: ['Вообще-то знаю', 'Нет']
+  },
+  {
+    questions: [
+      'О, как хорошо, что ты заглянул',
+      'Кажется, мы уже встречались?',
+      'На вечеринке... Ну этого... того '
+    ],
+    answers: ['Ну точно, было', 'Ты меня с кем-то путаешь']
+  },
+  {
+    questions: ['ЙОУ', 'ДИП!', 'РЭП'],
+    answers: ['ДИП!', 'ЭЭЭ, ЧТО?']
+  }
 ]
 
 function sample(array) {
   return array[Math.floor(Math.random() * array.length)]
 }
 
-function showMessage(message) {
-  const element = document.createElement('div')
-  element.innerText = message
-  element.classList.add('message')
+function showQuestions() {
+  const wrapper = document.createElement('div')
+  wrapper.classList.add('questionsWrapper')
 
-  document.body.appendChild(element)
-}
-
-document.addEventListener('DOMContentLoaded', (event) => {
-  const messages = sample(messageGroups)
+  const messageGroup = sample(messageGroups)
   let timeout = 2000
 
-  messages.forEach((message, i) => {
+  messageGroup.questions.forEach((message, i) => {
     if (i == 0) {
-      showMessage(message)
+      showQuestion(wrapper, message)
     } else {
-      setTimeout(() => {
-        showMessage(message)
-      }, timeout)
+      if (i + 1 == messageGroup.questions.length) {
+        setTimeout(() => {
+          showQuestion(wrapper, message)
+          showAnswers(messageGroup.answers)
+        }, timeout)
+      } else {
+        setTimeout(() => {
+          showQuestion(wrapper, message)
+        }, timeout)
 
-      // timeout = timeout + 2000
-      timeout += 2000
+        // timeout = timeout + 2000
+        timeout += 2000
+      }
     }
   })
+
+  document.body.appendChild(wrapper)
+}
+
+function showQuestion(wrapper, question) {
+  const element = document.createElement('div')
+  element.innerText = question
+  element.classList.add('question')
+
+  wrapper.appendChild(element)
+}
+
+function showAnswers(answers) {
+  const wrapper = document.createElement('div')
+  wrapper.classList.add('answersWrapper')
+
+  answers.forEach((answer, i) => {
+    const element = document.createElement('div')
+    element.innerText = answer
+    element.classList.add('answer')
+
+    element.addEventListener('click', () => {
+      console.log(answer)
+
+      showQuestions()
+    })
+
+    wrapper.appendChild(element)
+  })
+
+  document.body.appendChild(wrapper)
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  showQuestions()
 })
