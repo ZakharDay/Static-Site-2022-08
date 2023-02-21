@@ -1,0 +1,215 @@
+@media all and (min-width: 768px) {
+  body.modularGrid {
+    .grid {
+      display: grid;
+      grid-column-gap: 12px;
+      grid-row-gap: 12px;
+      margin: 0 auto 12px;
+
+      // &:nth-child(n + 8):nth-child(-n + 15) {
+      //   background: black;
+      // }
+
+      // &:nth-child(5n) {
+      //   background: black !important;
+      // }
+
+      // &:nth-child(n + 7) {
+      //   background: black !important;
+      // }
+
+      // &:nth-child(3n + 10) {
+      //   background: black !important;
+      // }
+
+      // &:nth-child(-n + 3) {
+      //   background: black !important;
+      // }
+    }
+  }
+}
+
+@media all and (min-width: 1260px) {
+  body.modularGrid {
+    .grid {
+      grid-template-columns: repeat(24, 1fr);
+      width: 1140px;
+
+      &:nth-child(odd) {
+        background: lightgrey;
+
+        .postTeaser {
+          &:nth-child(1) {
+            grid-column: 1 / 17;
+          }
+
+          &:nth-child(2) {
+            grid-column: 17 / 25;
+          }
+        }
+      }
+
+      &:nth-child(even) {
+        background: lightblue;
+
+        .postTeaser {
+          &:nth-child(1) {
+            grid-column: 1 / 9;
+          }
+
+          &:nth-child(2) {
+            grid-column: 9 / 25;
+          }
+        }
+      }
+
+      .postTeaser {
+        height: 450px;
+        background: pink;
+
+        &:nth-child(1),
+        &:nth-child(2) {
+          grid-row: 1 / 2;
+        }
+
+        &:nth-child(3) {
+          grid-column: 1 / 13;
+          grid-row: 2 / 3;
+        }
+
+        &:nth-child(4) {
+          grid-column: 13 / 25;
+          grid-row: 2 / 3;
+        }
+
+        &:nth-child(5) {
+          grid-column: 1 / 9;
+          grid-row: 3 / 4;
+        }
+
+        &:nth-child(6) {
+          grid-column: 9 / 17;
+          grid-row: 3 / 4;
+        }
+
+        &:nth-child(7) {
+          grid-column: 17 / 25;
+          grid-row: 3 / 4;
+        }
+      }
+    }
+  }
+}
+
+@media all and (min-width: 768px) and (max-width: 1259px) {
+  body.modularGrid {
+    .grid {
+      grid-template-columns: repeat(16, 1fr);
+      width: 756px;
+
+      &:nth-child(odd) {
+        background: lightgrey;
+
+        .postTeaser {
+          &:nth-child(1) {
+            grid-column: 1 / 17;
+            grid-row: 1 / 2;
+          }
+
+          &:nth-child(2) {
+            grid-column: 1 / 9;
+            grid-row: 2 / 3;
+          }
+
+          &:nth-child(3) {
+            grid-column: 9 / 17;
+            grid-row: 2 / 3;
+          }
+
+          &:nth-child(4) {
+            grid-column: 1 / 17;
+            grid-row: 3 / 4;
+          }
+
+          &:nth-child(5) {
+            grid-column: 1 / 9;
+            grid-row: 4 / 5;
+          }
+
+          &:nth-child(6) {
+            grid-column: 9 / 17;
+            grid-row: 4 / 5;
+          }
+
+          &:nth-child(7) {
+            grid-column: 1 / 17;
+            grid-row: 5 / 6;
+          }
+        }
+      }
+
+      &:nth-child(even) {
+        background: lightblue;
+
+        .postTeaser {
+          &:nth-child(1) {
+            grid-column: 1 / 9;
+            grid-row: 1 / 2;
+          }
+
+          &:nth-child(2) {
+            grid-column: 9 / 17;
+            grid-row: 1 / 2;
+          }
+
+          &:nth-child(3) {
+            grid-column: 1 / 17;
+            grid-row: 2 / 3;
+          }
+
+          &:nth-child(4) {
+            grid-column: 1 / 9;
+            grid-row: 3 / 4;
+          }
+
+          &:nth-child(5) {
+            grid-column: 9 / 17;
+            grid-row: 3 / 4;
+          }
+
+          &:nth-child(6) {
+            grid-column: 1 / 9;
+            grid-row: 4 / 5;
+          }
+
+          &:nth-child(7) {
+            grid-column: 9 / 17;
+            grid-row: 4 / 5;
+          }
+        }
+      }
+
+      .postTeaser {
+        height: 450px;
+        background: pink;
+      }
+    }
+  }
+}
+
+@media all and (max-width: 767px) {
+  body.modularGrid {
+    .grid {
+      width: 86.25vw;
+      margin: 0 auto 12px;
+      background: lightgrey;
+
+      .postTeaser {
+        width: 86.25vw;
+        height: 118.75vw;
+        margin-bottom: 12px;
+        background: pink;
+      }
+    }
+  }
+}

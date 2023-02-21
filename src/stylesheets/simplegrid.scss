@@ -1,0 +1,86 @@
+body.simpleGrid {
+  // background: var(--pink);
+
+  .mainGrid {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    grid-column-gap: 12px;
+    width: 996px;
+    margin: 0 auto;
+    background: lightgrey;
+
+    .books {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-column-gap: 54px;
+      grid-row-gap: 54px;
+      grid-column: 3 / 23;
+      background: pink;
+    }
+  }
+
+  .flexbox {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 996px;
+    margin: 100px auto;
+    background: lightgrey;
+
+    .bookWrapper {
+      margin: 0 27px 54px;
+    }
+  }
+
+  .bookWrapper {
+    position: relative;
+    width: 240px;
+    height: 348px;
+    background-color: var(--book);
+
+    .book {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      width: 240px;
+      height: 348px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--black);
+
+      h2 {
+        margin-top: 90px;
+        font-size: 16px;
+      }
+
+      h3 {
+        margin-top: 10px;
+        font-size: 12px;
+      }
+    }
+
+    .issueWrapper {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      width: 220px;
+      height: 30px;
+      text-align: center;
+
+      li {
+        display: inline;
+      }
+
+      a {
+        margin: 0 10px;
+        text-decoration: none;
+        color: var(--black);
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
