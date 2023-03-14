@@ -1,1 +1,231 @@
-//
+body.index {
+  #openModal,
+  #reset {
+    height: 60px;
+    line-height: 60px;
+    padding: 0 20px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    width: 100vw;
+    height: 100vh;
+
+    &.visible {
+      display: block;
+    }
+
+    .modalFader {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.6);
+
+      .modalWindow {
+        width: 600px;
+        min-height: 300px;
+        padding: 60px;
+        margin: auto;
+        background-color: white;
+
+        #closeModal {
+          height: 60px;
+          line-height: 60px;
+          padding: 0 20px;
+          margin-top: 30px;
+          background-color: black;
+          color: white;
+          cursor: pointer;
+          user-select: none;
+        }
+      }
+    }
+  }
+
+  .A_SelectInput {
+    color: green;
+
+    &::placeholder {
+      color: blue;
+    }
+  }
+
+  .A_SelectDropdownButton {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .A_SelectOptionListItem {
+    width: 300px;
+    height: 44px;
+    line-height: 44px;
+    padding: 0 10px;
+    cursor: pointer;
+    user-select: none;
+
+    &:first-child {
+      margin-top: 10px;
+    }
+
+    &:last-child {
+      margin-bottom: 10px;
+    }
+
+    &:hover {
+      background-color: grey;
+      color: white;
+    }
+
+    &.active {
+      background-color: green;
+      color: white;
+    }
+  }
+
+  .M_SelectField {
+    position: relative;
+
+    .A_SelectInput {
+      width: 300px;
+      height: 44px;
+      padding: 0 44px 0 10px;
+    }
+
+    .A_SelectDropdownButton {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+  }
+
+  .O_Select {
+    width: 300px;
+
+    &.focus {
+      .C_SelectOptionList {
+        display: block;
+      }
+    }
+
+    .C_SelectOptionList {
+      display: none;
+      max-height: 300px;
+      overflow-y: scroll;
+      background-color: cornsilk;
+    }
+  }
+
+  //
+  // Multiselect
+  //
+
+  .A_MultiSelectInput {
+    // color: green;
+
+    // &::placeholder {
+    //   color: blue;
+    // }
+  }
+
+  .A_MultiSelectChip {
+    display: flex;
+    gap: 6px;
+    // height: 30px;
+    line-height: 30px;
+    padding: 3px;
+    background-color: grey;
+
+    .Q_MultiSelectChipButton::after {
+      content: 'X';
+      color: black;
+    }
+  }
+
+  .A_MultiSelectDropdownButton {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .A_MultiSelectOptionListItem {
+    width: 300px;
+    height: 44px;
+    line-height: 44px;
+    padding: 0 10px;
+    cursor: pointer;
+    user-select: none;
+
+    &:first-child {
+      margin-top: 10px;
+    }
+
+    &:last-child {
+      margin-bottom: 10px;
+    }
+
+    &:hover {
+      background-color: grey;
+      color: white;
+    }
+
+    &.active {
+      background-color: green;
+      color: white;
+    }
+  }
+
+  .M_MultiSelectField {
+    position: relative;
+    max-height: 200px;
+    overflow-y: scroll;
+
+    .A_MultiSelectInput {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      width: 300px;
+      min-height: 44px;
+      padding: 10px 44px 10px 10px;
+    }
+
+    .A_MultiSelectDropdownButton {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+  }
+
+  .O_MultiSelect {
+    width: 300px;
+    border: 1px solid black;
+
+    &.focus {
+      .C_MultiSelectOptionList {
+        display: block;
+      }
+    }
+
+    .C_MultiSelectOptionList {
+      display: none;
+      max-height: 300px;
+      overflow-y: scroll;
+      background-color: cornsilk;
+    }
+  }
+}

@@ -3,68 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <title>UI</title>
-
-    <script type="text/javascript">
-      document.addEventListener('DOMContentLoaded', () => {
-        const asideButton = document.getElementsByClassName('asideButton')[0]
-        const postTeasers = document.getElementsByClassName('postTeaser')
-        const fader = document.getElementsByClassName('fader')[0]
-        const post = document.getElementsByClassName('post')[0]
-        const sliderButtonLeft = document.querySelector('.sliderButton.left')
-        const sliderButtonRight = document.querySelector('.sliderButton.right')
-        const rail = document.getElementsByClassName('rail')[0]
-        const railLength = rail.children.length
-        let currentSlide = 0
-
-        function toggleModal() {
-          const body = document.body
-          body.classList.toggle('modal')
-        }
-
-        function toggleAside() {
-          post.classList.toggle('aside')
-        }
-
-        function slide(direction) {
-          if (direction === 'next' && currentSlide + 1 < railLength) {
-            currentSlide++
-          } else if (direction === 'prev' && currentSlide > 0) {
-            currentSlide--
-          }
-
-          rail.style.transform = 'translateX(-' + 664 * currentSlide + 'px)'
-        }
-
-        for (var i = 0; i < postTeasers.length; i++) {
-          postTeasers[i].addEventListener('click', toggleModal)
-        }
-
-        fader.addEventListener('click', toggleModal)
-        asideButton.addEventListener('click', toggleAside)
-
-        sliderButtonLeft.addEventListener('click', () => {
-          slide('prev')
-        })
-
-        sliderButtonRight.addEventListener('click', () => {
-          slide('next')
-        })
-
-        // window.addEventListener('resize', () => {
-        //   const rect = document
-        //     .getElementsByClassName('postTeaser')[0]
-        //     .getBoundingClientRect()
-        //
-        //   console.log('resize', rect)
-        // })
-      })
-    </script>
   </head>
   <body class="ui">
     <section class="postModal">
       <div class="fader"></div>
 
-      <div class="sliderButton left"></div>
+      <div class="sliderButtonWrapper">
+        <div class="sliderButton left hidden"></div>
+      </div>
 
       <div class="post aside">
         <div class="asideButton"></div>
@@ -141,7 +87,9 @@
         </aside>
       </div>
 
-      <div class="sliderButton right"></div>
+      <div class="sliderButtonWrapper">
+        <div class="sliderButton right"></div>
+      </div>
     </section>
 
     <section class="posts">
