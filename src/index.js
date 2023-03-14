@@ -1,70 +1,58 @@
 import './index.css'
 import Cookies from 'js-cookie'
+import { generateHash } from './utilities.js'
 
-let selectOptions = [
-  'Ledger Nano',
-  'funds safety',
-  'metal crypto wallet',
-  'be your own bank',
-  'BIP39',
-  'Electrum',
-  'bitcoin',
-  'exchange',
-  'hardware wallets',
-  'BIP39 pdf',
-  'BIP39 word list',
-  'announcements',
-  'guides',
-  'hardware wallet',
-  'Ledger',
-  'Ledger Nano S Plus',
-  'mnemonic phrase',
-  'private key',
-  'resources',
-  'security',
-  'seed phrase',
-  'seed phrase backup',
-  'seed phrase storage',
-  'tips',
-  'Trezor One',
-  'updates',
-  'wallet',
-  'wallets'
-]
+let selectOptions = ['Ledger Nano']
 
-const multiSelectOptions = [
-  { text: 'announcements', active: false },
-  { text: 'be your own bank', active: false },
-  { text: 'BIP39', active: false },
-  { text: 'BIP39 pdf', active: false },
-  { text: 'BIP39 word list', active: false },
-  { text: 'bitcoin', active: false },
-  { text: 'Electrum', active: false },
-  { text: 'exchange', active: false },
-  { text: 'funds safety', active: false },
-  { text: 'guides', active: false },
-  { text: 'hardware wallet', active: false },
-  { text: 'hardware wallets', active: false },
-  { text: 'Ledger', active: false },
-  { text: 'Ledger Nano', active: false },
-  { text: 'Ledger Nano S Plus', active: false },
-  { text: 'metal crypto wallet', active: false },
-  { text: 'mnemonic phrase', active: false },
-  { text: 'private key', active: false },
-  { text: 'resources', active: false },
-  { text: 'security', active: false },
-  { text: 'seed phrase', active: false },
-  { text: 'seed phrase backup', active: false },
-  { text: 'seed phrase storage', active: false },
-  { text: 'tips', active: false },
-  { text: 'Trezor One', active: false },
-  { text: 'updates', active: false },
-  { text: 'wallet', active: false },
-  { text: 'wallets', active: false }
-]
+const multiSelectOptions = []
+
+const content = []
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
+function transformToLowercase(array) {
+  const transformedArray = []
+
+  array.forEach((item) => {
+    transformedArray.push(item.toLowerCase())
+  })
+
+  return transformedArray
+}
+
+// function getContentItemDataTags() {
+//   const tags = []
+
+//   const contentItems = document.getElementsByClassName('O_ContentItem')
+
+//   for (let i = 0; i < contentItems.length; i++) {
+//     const contentItem = contentItems[i]
+//     const contentItemTags = contentItem.dataset.tags.split(',')
+
+//     // contentItemTags.forEach((tag) => {
+//     //   tags.push(tag)
+//     // })
+
+//     tags.push(...contentItemTags)
+//   }
+
+//   const uniqTags = transformToLowercase([...new Set(tags)])
+
+//   return uniqTags.sort()
+// }
+
+function getContentItemDataTags() {
+  const tags = []
+
+  for (let i = 0; i < content.length; i++) {
+    tags.push(...content[i].tags)
+  }
+
+  const uniqTags = transformToLowercase([...new Set(tags)])
+
+  return uniqTags.sort()
 }
 
 function updateSelectData(option) {
@@ -75,6 +63,118 @@ function updateSelectData(option) {
       o.active = !active
     }
   })
+}
+
+// function updateContent() {
+//   const contentItems = document.getElementsByClassName('O_ContentItem')
+//   const selectedTags = []
+
+//   multiSelectOptions.forEach((item) => {
+//     if (item.active) {
+//       selectedTags.push(item.text)
+//     }
+//   })
+
+//   for (let i = 0; i < contentItems.length; i++) {
+//     const contentItem = contentItems[i]
+//     const contentItemTags = transformToLowercase(
+//       contentItem.dataset.tags.split(',')
+//     )
+
+//     contentItem.classList.remove('hidden')
+
+//     selectedTags.forEach((tag) => {
+//       if (!contentItemTags.includes(tag)) {
+//         contentItem.classList.add('hidden')
+//       }
+//     })
+//   }
+// }
+
+function rerenderContent() {
+  const contentItemsContainer = document.querySelector('.S_Content')
+  const selectedTags = []
+
+  multiSelectOptions.forEach((item) => {
+    if (item.active) {
+      selectedTags.push(item.text)
+    }
+  })
+
+  contentItemsContainer.innerHTML = ''
+
+  // content.forEach((contentItem) => {
+  //   if (selectedTags.length > 0) {
+  //     selectedTags.forEach((tag) => {
+  //       if (transformToLowercase(contentItem.tags).includes(tag)) {
+  //         console.log(contentItem, 'true')
+  //         contentItemsContainer.appendChild(createContentCard(contentItem))
+  //       } else {
+  //         console.log('false')
+  //       }
+  //     })
+  //   } else {
+  //     contentItemsContainer.appendChild(createContentCard(contentItem))
+  //   }
+  // })
+
+  let contentItemIds = []
+
+  content.forEach((contentItem) => {
+    if (selectedTags.length > 0) {
+      selectedTags.forEach((tag) => {
+        if (transformToLowercase(contentItem.tags).includes(tag)) {
+          contentItemIds.push(contentItem.id)
+        }
+      })
+    } else {
+      contentItemIds.push(contentItem.id)
+    }
+  })
+
+  contentItemIds = [...new Set(contentItemIds)]
+
+  contentItemIds.forEach((id) => {
+    content.forEach((contentItemData) => {
+      if (contentItemData.id === id) {
+        contentItemsContainer.appendChild(createContentCard(contentItemData))
+      }
+    })
+  })
+}
+
+function createContentCard(contentItemData) {
+  const contentItem = document.createElement('div')
+  contentItem.classList.add('O_ContentItem')
+
+  const contentItemCover = document.createElement('img')
+  contentItemCover.classList.add('A_ContentItemCover')
+  contentItemCover.src = contentItemData.image
+
+  const contentItemTags = document.createElement('div')
+  contentItemTags.classList.add('C_ContentItemTags')
+
+  contentItemData.tags.forEach((tag) => {
+    const contentItemTag = document.createElement('div')
+    contentItemTag.classList.add('A_ContentItemTag')
+    contentItemTag.innerText = tag
+    contentItemTags.appendChild(contentItemTag)
+  })
+
+  const contentItemTitle = document.createElement('h2')
+  contentItemTitle.classList.add('A_ContentItemTitle')
+  contentItemTitle.innerText = contentItemData.title
+
+  const contentItemDescription = document.createElement('p')
+  contentItemDescription.classList.add('A_ContentItemDescription')
+  contentItemDescription.innerText = contentItemData.description
+
+  contentItem.appendChild(contentItemCover)
+  contentItem.appendChild(contentItemTags)
+  contentItem.appendChild(contentItemTitle)
+  contentItem.appendChild(contentItemDescription)
+
+  return contentItem
 }
 
 function updateSelectOptionList() {
@@ -94,6 +194,7 @@ function updateSelectOptionList() {
       listItem.addEventListener('click', () => {
         updateSelectData(option)
         updateSelectOptionList()
+        rerenderContent()
 
         selectInput.appendChild(createChip(option))
       })
@@ -117,6 +218,7 @@ function createChip(option) {
   chipElementButton.addEventListener('click', () => {
     updateSelectData(option)
     updateSelectOptionList()
+    rerenderContent()
     chipElement.remove()
   })
 
@@ -126,10 +228,45 @@ function createChip(option) {
   return chipElement
 }
 
+// function initMultiSelect() {
+//   const selectElement = document.querySelector('.O_MultiSelect')
+//   const selectInput = document.querySelector('.A_MultiSelectInput')
+//   const dropdownButton = document.querySelector('.A_MultiSelectDropdownButton')
+
+//   getContentItemDataTags().forEach((tag) => {
+//     multiSelectOptions.push({ text: tag, active: false })
+//   })
+
+//   updateSelectOptionList()
+
+//   selectInput.addEventListener('focus', () => {
+//     selectElement.classList.add('focus')
+//   })
+
+//   dropdownButton.addEventListener('click', () => {
+//     selectElement.classList.toggle('focus')
+//   })
+
+//   document.body.addEventListener('click', (e) => {
+//     console.log('Click on Body', multiSelectOptions)
+
+//     if (
+//       !e.target.classList.contains('A_MultiSelectInput') &&
+//       !e.target.classList.contains('A_MultiSelectDropdownButton')
+//     ) {
+//       selectElement.classList.remove('focus')
+//     }
+//   })
+// }
+
 function initMultiSelect() {
   const selectElement = document.querySelector('.O_MultiSelect')
   const selectInput = document.querySelector('.A_MultiSelectInput')
   const dropdownButton = document.querySelector('.A_MultiSelectDropdownButton')
+
+  getContentItemDataTags().forEach((tag) => {
+    multiSelectOptions.push({ text: tag, active: false })
+  })
 
   updateSelectOptionList()
 
@@ -235,10 +372,47 @@ function initModal() {
   }
 }
 
+function initFilters() {
+  const contentItems = document.getElementsByClassName('O_ContentItem')
+
+  for (let i = 0; i < contentItems.length; i++) {
+    const contentItem = contentItems[i]
+
+    const contentItemCover = contentItem.querySelector(
+      '.A_ContentItemCover'
+    ).src
+
+    const contentItemTags = contentItem.dataset.tags.split(',')
+
+    const contentItemTitle = contentItem.querySelector(
+      '.A_ContentItemTitle'
+    ).innerText
+
+    const contentItemDescription = contentItem.querySelector(
+      '.A_ContentItemDescription'
+    ).innerText
+
+    const contentItemData = {
+      id: generateHash(),
+      image: contentItemCover,
+      tags: contentItemTags,
+      title: contentItemTitle,
+      description: contentItemDescription
+    }
+
+    content.push(contentItemData)
+  }
+
+  console.log('content', content)
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   if (document.body.classList.contains('index')) {
     initModal()
     initSelect()
+    // initMultiSelect()
+
+    initFilters()
     initMultiSelect()
   }
 })

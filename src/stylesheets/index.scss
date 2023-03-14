@@ -228,4 +228,40 @@ body.index {
       background-color: cornsilk;
     }
   }
+
+  .S_Content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 900px;
+    margin: 100px auto;
+  }
+
+  .O_ContentItem {
+    width: 280px;
+
+    .C_ContentItemTags {
+      display: flex;
+      gap: 8px;
+      margin: 10px 0;
+    }
+
+    &.hidden {
+      display: none;
+    }
+  }
+
+  .A_ContentItemTag {
+    padding: 4px;
+    background-color: grey;
+    color: white;
+  }
+
+  .A_ContentItemCover {
+    width: 100%;
+  }
+
+  .A_ContentItemTitle {
+    font-weight: bold;
+  }
 }
