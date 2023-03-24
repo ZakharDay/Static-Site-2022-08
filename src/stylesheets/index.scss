@@ -49,7 +49,8 @@ body.index {
     }
   }
 
-  .A_SelectInput {
+  .A_SelectInput,
+  .A_SearchInput {
     color: green;
 
     &::placeholder {
@@ -67,7 +68,8 @@ body.index {
     cursor: pointer;
   }
 
-  .A_SelectOptionListItem {
+  .A_SelectOptionListItem,
+  .A_SearchListItem {
     width: 300px;
     height: 44px;
     line-height: 44px;
@@ -229,6 +231,30 @@ body.index {
     }
   }
 
+  .O_Search {
+    width: 300px;
+    border: 1px solid black;
+
+    .A_SearchInput {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      width: 300px;
+      height: 44px;
+      min-height: 44px;
+      padding: 10px 44px 10px 10px;
+      background-color: transparent;
+      border: 0px solid;
+
+      &:focus {
+        border-color: inherit;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        outline: none;
+      }
+    }
+  }
+
   .S_Content {
     display: flex;
     flex-wrap: wrap;
@@ -262,6 +288,7 @@ body.index {
   }
 
   .A_ContentItemTitle {
+    margin: 20px 0 10px;
     font-weight: bold;
   }
 }

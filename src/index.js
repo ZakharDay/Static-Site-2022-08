@@ -91,7 +91,111 @@ function updateSelectData(option) {
 //   }
 // }
 
-function rerenderContent() {
+function rerenderContent(requestText = '') {
+  const contentItemsContainer = document.querySelector('.S_Content')
+  contentItemsContainer.innerHTML = ''
+
+  const selectedTags = []
+
+  multiSelectOptions.forEach((item) => {
+    if (item.active) {
+      selectedTags.push(item.text)
+    }
+  })
+
+  let contentItemIds = []
+
+  content.forEach((contentItem) => {
+    const nbspRegex = /[\u202F\u00A0]/gm
+    const punctuationRegex = /[.,\/#!$%\^&\*;:{}=\-_`~()]/gm
+
+    let title = contentItem.title.replaceAll(nbspRegex, ' ')
+    title = title.toLowerCase().replaceAll(punctuationRegex, '')
+
+    let description = contentItem.description.replaceAll(nbspRegex, ' ')
+    description = description.toLowerCase().replaceAll(punctuationRegex, '')
+
+    if (requestText.length >= 3 && selectedTags.length == 0) {
+      console.log('case 1')
+      if (title.includes(requestText) || description.includes(requestText)) {
+        contentItemIds.push(contentItem.id)
+      }
+    } else if (requestText.length < 3 && selectedTags.length > 0) {
+      console.log('case 2')
+      selectedTags.forEach((tag) => {
+        if (transformToLowercase(contentItem.tags).includes(tag)) {
+          contentItemIds.push(contentItem.id)
+        }
+      })
+    } else if (requestText.length >= 3 && selectedTags.length > 0) {
+      console.log('case 3')
+      selectedTags.forEach((tag) => {
+        if (transformToLowercase(contentItem.tags).includes(tag)) {
+          console.log('case 3.1', title, requestText)
+
+          if (
+            title.includes(requestText) ||
+            description.includes(requestText)
+          ) {
+            console.log('case 3.2')
+            contentItemIds.push(contentItem.id)
+          }
+        }
+      })
+    } else {
+      console.log('case 4')
+      contentItemIds.push(contentItem.id)
+    }
+  })
+
+  contentItemIds = [...new Set(contentItemIds)]
+
+  contentItemIds.forEach((id) => {
+    content.forEach((contentItemData) => {
+      if (contentItemData.id === id) {
+        contentItemsContainer.appendChild(createContentCard(contentItemData))
+      }
+    })
+  })
+}
+
+function rerenderSearchedContent(requestText) {
+  const contentItemsContainer = document.querySelector('.S_Content')
+  contentItemsContainer.innerHTML = ''
+
+  let contentItemIds = []
+
+  content.forEach((contentItem) => {
+    const nbspRegex = /[\u202F\u00A0]/gm
+    const punctuationRegex = /[.,\/#!$%\^&\*;:{}=\-_`~()]/gm
+
+    let title = contentItem.title.replaceAll(nbspRegex, ' ')
+    title = title.replaceAll(punctuationRegex, '')
+
+    let description = contentItem.description.replaceAll(nbspRegex, ' ')
+    description = description.replaceAll(punctuationRegex, '')
+
+    if (requestText.length >= 3) {
+      if (title.includes(requestText) || description.includes(requestText)) {
+        contentItemIds.push(contentItem.id)
+      }
+    } else {
+      contentItemIds.push(contentItem.id)
+    }
+  })
+
+  contentItemIds = [...new Set(contentItemIds)]
+
+  contentItemIds.forEach((id) => {
+    content.forEach((contentItemData) => {
+      if (contentItemData.id === id) {
+        contentItemsContainer.appendChild(createContentCard(contentItemData))
+      }
+    })
+  })
+}
+
+function rerenderFilteredContent() {
   const contentItemsContainer = document.querySelector('.S_Content')
   const selectedTags = []
 
@@ -194,6 +298,7 @@ function updateSelectOptionList() {
       listItem.addEventListener('click', () => {
         updateSelectData(option)
         updateSelectOptionList()
+        // rerenderFilteredContent()
         rerenderContent()
 
         selectInput.appendChild(createChip(option))
@@ -218,6 +323,7 @@ function createChip(option) {
   chipElementButton.addEventListener('click', () => {
     updateSelectData(option)
     updateSelectOptionList()
+    // rerenderFilteredContent()
     rerenderContent()
     chipElement.remove()
   })
@@ -270,8 +376,39 @@ function initMultiSelect() {
 
   updateSelectOptionList()
 
-  selectInput.addEventListener('focus', () => {
+  selectInput.addEventListener('focus', (e) => {
     selectElement.classList.add('focus')
+  })
+
+  selectInput.addEventListener('input', (e) => {
+    const requestText = e.target.innerText
+    console.log(requestText)
+
+    const optionListElement = document.querySelector('.C_MultiSelectOptionList')
+    optionListElement.innerHTML = ''
+
+    multiSelectOptions.forEach((option) => {
+      const { text, active } = option
+
+      if (!active) {
+        if (text.startsWith(requestText)) {
+          const listItem = document.createElement('div')
+          listItem.classList.add('A_MultiSelectOptionListItem')
+          listItem.innerText = text
+
+          listItem.addEventListener('click', () => {
+            updateSelectData(option)
+            updateSelectOptionList()
+            // rerenderFilteredContent()
+            rerenderContent()
+
+            selectInput.appendChild(createChip(option))
+          })
+
+          optionListElement.appendChild(listItem)
+        }
+      }
+    })
   })
 
   dropdownButton.addEventListener('click', () => {
@@ -279,8 +416,6 @@ function initMultiSelect() {
   })
 
   document.body.addEventListener('click', (e) => {
-    console.log('Click on Body', multiSelectOptions)
-
     if (
       !e.target.classList.contains('A_MultiSelectInput') &&
       !e.target.classList.contains('A_MultiSelectDropdownButton')
@@ -331,8 +466,6 @@ function initSelect() {
   })
 
   document.body.addEventListener('click', (e) => {
-    console.log('Click on Body', e)
-
     if (
       !e.target.classList.contains('A_SelectInput') &&
       !e.target.classList.contains('A_SelectDropdownButton')
@@ -349,20 +482,14 @@ function initModal() {
   const modal = document.querySelector('.modal')
 
   openButton.addEventListener('click', () => {
-    console.log('open clicked')
-
     modal.classList.add('visible')
   })
 
   closeButton.addEventListener('click', () => {
-    console.log('close clicked')
-
     modal.classList.remove('visible')
   })
 
   resetButton.addEventListener('click', () => {
-    console.log('reset clicked')
-
     Cookies.remove('modal')
   })
 
@@ -403,7 +530,18 @@ function initFilters() {
     content.push(contentItemData)
   }
 
-  console.log('content', content)
+  // console.log('content', content)
+}
+
+function initSearch() {
+  const searchInput = document.querySelector('.A_SearchInput')
+  console.log(searchInput)
+
+  searchInput.addEventListener('input', (e) => {
+    const { value } = e.target
+    // rerenderSearchedContent(value.toLowerCase())
+    rerenderContent(value.toLowerCase())
+  })
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -414,5 +552,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initFilters()
     initMultiSelect()
+
+    initSearch()
   }
 })
