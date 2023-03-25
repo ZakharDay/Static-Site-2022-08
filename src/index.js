@@ -2,15 +2,13 @@ import './index.css'
 import Cookies from 'js-cookie'
 import { generateHash } from './utilities.js'
 
-let selectOptions = ['Ledger Nano']
-
+const selectOptions = []
 const multiSelectOptions = []
-
 const content = []
 
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1)
-}
+// function capitalizeFirstLetter(string) {
+//   return string.charAt(0).toUpperCase() + string.slice(1)
+// }
 
 function transformToLowercase(array) {
   const transformedArray = []
@@ -91,10 +89,22 @@ function updateSelectData(option) {
 //   }
 // }
 
-function rerenderContent(requestText = '') {
-  const contentItemsContainer = document.querySelector('.S_Content')
-  contentItemsContainer.innerHTML = ''
+function renderCardsByIds(container, ids) {
+  ids = [...new Set(ids)]
 
+  ids.forEach((id) => {
+    content.forEach((item) => {
+      if (item.id === id) {
+        container.appendChild(createContentCard(item))
+      }
+    })
+  })
+}
+
+function rerenderContent() {
+  const contentItemsContainer = document.querySelector('.S_Content')
+  const searchInput = document.querySelector('.A_SearchInput')
+  const requestText = searchInput.value.toLowerCase()
   const selectedTags = []
 
   multiSelectOptions.forEach((item) => {
@@ -103,60 +113,47 @@ function rerenderContent(requestText = '') {
     }
   })
 
+  contentItemsContainer.innerHTML = ''
+
   let contentItemIds = []
 
   content.forEach((contentItem) => {
     const nbspRegex = /[\u202F\u00A0]/gm
     const punctuationRegex = /[.,\/#!$%\^&\*;:{}=\-_`~()]/gm
+    let { title, description } = contentItem
 
-    let title = contentItem.title.replaceAll(nbspRegex, ' ')
-    title = title.toLowerCase().replaceAll(punctuationRegex, '')
+    title = title.toLowerCase().replaceAll(nbspRegex, ' ')
+    title = title.replaceAll(punctuationRegex, '')
+    description = description.toLowerCase().replaceAll(nbspRegex, ' ')
+    description = description.replaceAll(punctuationRegex, '')
 
-    let description = contentItem.description.replaceAll(nbspRegex, ' ')
-    description = description.toLowerCase().replaceAll(punctuationRegex, '')
-
-    if (requestText.length >= 3 && selectedTags.length == 0) {
-      console.log('case 1')
+    if (requestText.length >= 3 && selectedTags.length === 0) {
       if (title.includes(requestText) || description.includes(requestText)) {
         contentItemIds.push(contentItem.id)
       }
     } else if (requestText.length < 3 && selectedTags.length > 0) {
-      console.log('case 2')
       selectedTags.forEach((tag) => {
         if (transformToLowercase(contentItem.tags).includes(tag)) {
           contentItemIds.push(contentItem.id)
         }
       })
     } else if (requestText.length >= 3 && selectedTags.length > 0) {
-      console.log('case 3')
       selectedTags.forEach((tag) => {
         if (transformToLowercase(contentItem.tags).includes(tag)) {
-          console.log('case 3.1', title, requestText)
-
           if (
             title.includes(requestText) ||
             description.includes(requestText)
           ) {
-            console.log('case 3.2')
             contentItemIds.push(contentItem.id)
           }
         }
       })
     } else {
-      console.log('case 4')
       contentItemIds.push(contentItem.id)
     }
   })
 
-  contentItemIds = [...new Set(contentItemIds)]
-
-  contentItemIds.forEach((id) => {
-    content.forEach((contentItemData) => {
-      if (contentItemData.id === id) {
-        contentItemsContainer.appendChild(createContentCard(contentItemData))
-      }
-    })
-  })
+  renderCardsByIds(contentItemsContainer, contentItemIds)
 }
 
 function rerenderSearchedContent(requestText) {
@@ -184,15 +181,7 @@ function rerenderSearchedContent(requestText) {
     }
   })
 
-  contentItemIds = [...new Set(contentItemIds)]
-
-  contentItemIds.forEach((id) => {
-    content.forEach((contentItemData) => {
-      if (contentItemData.id === id) {
-        contentItemsContainer.appendChild(createContentCard(contentItemData))
-      }
-    })
-  })
+  renderCardsByIds(contentItemsContainer, contentItemIds)
 }
 
 function rerenderFilteredContent() {
@@ -236,15 +225,7 @@ function rerenderFilteredContent() {
     }
   })
 
-  contentItemIds = [...new Set(contentItemIds)]
-
-  contentItemIds.forEach((id) => {
-    content.forEach((contentItemData) => {
-      if (contentItemData.id === id) {
-        contentItemsContainer.appendChild(createContentCard(contentItemData))
-      }
-    })
-  })
+  renderCardsByIds(contentItemsContainer, contentItemIds)
 }
 
 function createContentCard(contentItemData) {
@@ -370,52 +351,26 @@ function initMultiSelect() {
   const selectInput = document.querySelector('.A_MultiSelectInput')
   const dropdownButton = document.querySelector('.A_MultiSelectDropdownButton')
 
-  getContentItemDataTags().forEach((tag) => {
-    multiSelectOptions.push({ text: tag, active: false })
+  getContentItemDataTags().forEach((item) => {
+    multiSelectOptions.push({
+      text: item,
+      active: false
+    })
   })
 
   updateSelectOptionList()
-
-  selectInput.addEventListener('focus', (e) => {
-    selectElement.classList.add('focus')
-  })
-
-  selectInput.addEventListener('input', (e) => {
-    const requestText = e.target.innerText
-    console.log(requestText)
-
-    const optionListElement = document.querySelector('.C_MultiSelectOptionList')
-    optionListElement.innerHTML = ''
-
-    multiSelectOptions.forEach((option) => {
-      const { text, active } = option
-
-      if (!active) {
-        if (text.startsWith(requestText)) {
-          const listItem = document.createElement('div')
-          listItem.classList.add('A_MultiSelectOptionListItem')
-          listItem.innerText = text
-
-          listItem.addEventListener('click', () => {
-            updateSelectData(option)
-            updateSelectOptionList()
-            // rerenderFilteredContent()
-            rerenderContent()
-
-            selectInput.appendChild(createChip(option))
-          })
-
-          optionListElement.appendChild(listItem)
-        }
-      }
-    })
-  })
 
   dropdownButton.addEventListener('click', () => {
     selectElement.classList.toggle('focus')
   })
 
+  selectInput.addEventListener('focus', () => {
+    selectElement.classList.add('focus')
+  })
+
   document.body.addEventListener('click', (e) => {
+    console.log(multiSelectOptions)
+
     if (
       !e.target.classList.contains('A_MultiSelectInput') &&
       !e.target.classList.contains('A_MultiSelectDropdownButton')
@@ -431,16 +386,63 @@ function initSelect() {
   const selectInput = document.querySelector('.A_SelectInput')
   const dropdownButton = document.querySelector('.A_SelectDropdownButton')
 
-  selectOptions = selectOptions.map((option) => {
-    return capitalizeFirstLetter(option)
+  optionListElement.innerHTML = ''
+
+  getContentItemDataTags().forEach((item) => {
+    selectOptions.push(item)
   })
 
-  selectOptions.sort().forEach((option) => {
+  fillSelect(selectOptions)
+
+  dropdownButton.addEventListener('click', () => {
+    selectElement.classList.toggle('focus')
+  })
+
+  selectInput.addEventListener('focus', () => {
+    selectElement.classList.add('focus')
+  })
+
+  selectInput.addEventListener('input', (e) => {
+    const { value } = e.target
+
+    const filteredSelectOptions = []
+
+    selectOptions.forEach((option) => {
+      if (value.length > 0) {
+        if (option.startsWith(value)) {
+          filteredSelectOptions.push(option)
+        }
+      } else {
+        filteredSelectOptions.push(option)
+      }
+    })
+
+    optionListElement.innerHTML = ''
+    fillSelect(filteredSelectOptions)
+  })
+
+  document.body.addEventListener('click', (e) => {
+    if (
+      !e.target.classList.contains('A_SelectInput') &&
+      !e.target.classList.contains('A_SelectDropdownButton')
+    ) {
+      selectElement.classList.remove('focus')
+    }
+  })
+}
+
+function fillSelect(selectOptions) {
+  const selectElement = document.querySelector('.O_Select')
+  const optionListElement = document.querySelector('.C_SelectOptionList')
+  const selectInput = document.querySelector('.A_SelectInput')
+
+  selectOptions.forEach((option) => {
     const listItem = document.createElement('div')
-    listItem.innerText = option
     listItem.classList.add('A_SelectOptionListItem')
+    listItem.innerText = option
 
     listItem.addEventListener('click', () => {
+      console.log('click')
       const listItems = document.getElementsByClassName(
         'A_SelectOptionListItem'
       )
@@ -451,27 +453,12 @@ function initSelect() {
       }
 
       listItem.classList.add('active')
+
       selectInput.value = option
+      selectElement.classList.remove('focus')
     })
 
     optionListElement.appendChild(listItem)
-  })
-
-  selectInput.addEventListener('focus', () => {
-    selectElement.classList.add('focus')
-  })
-
-  dropdownButton.addEventListener('click', () => {
-    selectElement.classList.toggle('focus')
-  })
-
-  document.body.addEventListener('click', (e) => {
-    if (
-      !e.target.classList.contains('A_SelectInput') &&
-      !e.target.classList.contains('A_SelectDropdownButton')
-    ) {
-      selectElement.classList.remove('focus')
-    }
   })
 }
 
@@ -535,24 +522,18 @@ function initFilters() {
 
 function initSearch() {
   const searchInput = document.querySelector('.A_SearchInput')
-  console.log(searchInput)
 
-  searchInput.addEventListener('input', (e) => {
-    const { value } = e.target
-    // rerenderSearchedContent(value.toLowerCase())
-    rerenderContent(value.toLowerCase())
+  searchInput.addEventListener('input', () => {
+    rerenderContent()
   })
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   if (document.body.classList.contains('index')) {
     initModal()
-    initSelect()
-    // initMultiSelect()
-
     initFilters()
     initMultiSelect()
-
     initSearch()
+    initSelect()
   }
 })
