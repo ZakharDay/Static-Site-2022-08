@@ -13,7 +13,8 @@ module.exports = {
     dictionary: './src/dictionary.js',
     jsbasics: './src/jsbasics.js',
     adcgame: './src/adcgame.js',
-    ui: './src/ui.js'
+    ui: './src/ui.js',
+    search: './src/search.js'
   },
   output: {
     filename: '[name].[contenthash].js',
@@ -98,6 +99,12 @@ module.exports = {
       template: './src/index.html',
       filename: './index.html',
       chunks: ['index']
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/search.html',
+      filename: './search.html',
+      chunks: ['search']
     }),
 
     new HtmlWebpackPlugin({
