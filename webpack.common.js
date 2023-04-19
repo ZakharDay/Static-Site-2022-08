@@ -14,7 +14,8 @@ module.exports = {
     jsbasics: './src/jsbasics.js',
     adcgame: './src/adcgame.js',
     ui: './src/ui.js',
-    search: './src/search.js'
+    search: './src/search.js',
+    reactBasics: './src/react-basics.jsx'
   },
   output: {
     filename: '[name].[contenthash].js',
@@ -105,6 +106,12 @@ module.exports = {
       template: './src/search.html',
       filename: './search.html',
       chunks: ['search']
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/react-basics.html',
+      filename: './react-basics.html',
+      chunks: ['reactBasics']
     }),
 
     new HtmlWebpackPlugin({
