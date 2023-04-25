@@ -15,7 +15,8 @@ module.exports = {
     adcgame: './src/adcgame.js',
     ui: './src/ui.js',
     search: './src/search.js',
-    reactBasics: './src/react-basics.jsx'
+    reactBasics: './src/react-basics.jsx',
+    searchBar: './src/searchbar.jsx'
   },
   output: {
     filename: '[name].[contenthash].js',
@@ -99,7 +100,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: './index.html',
-      chunks: ['index']
+      chunks: ['index', 'searchBar']
     }),
 
     new HtmlWebpackPlugin({
@@ -199,6 +200,15 @@ module.exports = {
       {
         path: path.join(__dirname, './src/partials/analytics.html'),
         location: 'analytics',
+        template_filename: '*',
+        priority: 'replace'
+      }
+    ]),
+
+    new HtmlWebpackPartialsPlugin([
+      {
+        path: path.join(__dirname, './src/partials/menubar.html'),
+        location: 'menubar',
         template_filename: '*',
         priority: 'replace'
       }
