@@ -13,6 +13,8 @@ export default class O_SearchBar extends React.Component {
     }
   }
 
+  // to commit
+
   componentDidMount() {
     getPostTeasers().then((data) => {
       this.setState({
