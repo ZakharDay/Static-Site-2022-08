@@ -1,3 +1,8 @@
 .O_SearchBar {
-  color: red;
+  .C_PostTeasers {
+    position: absolute;
+    background-color: white;
+    overflow-y: scroll;
+    max-height: 360px;
+  }
 }

@@ -72,6 +72,7 @@ function rerenderSearchedContent(requestText) {
   contentItemsContainer.innerHTML = ''
 
   let contentItemIds = []
+  requestText = requestText.toLowerCase()
 
   content.forEach((contentItem) => {
     const nbspRegex = /[\u202F\u00A0]/gm
@@ -80,8 +81,11 @@ function rerenderSearchedContent(requestText) {
 
     title = title.replaceAll(nbspRegex, ' ')
     title = title.replaceAll(punctuationRegex, '')
+    title = title.toLowerCase()
+
     description = description.replaceAll(nbspRegex, ' ')
     description = description.replaceAll(punctuationRegex, '')
+    description = description.toLowerCase()
 
     if (requestText.length >= 3) {
       if (title.includes(requestText) || description.includes(requestText)) {

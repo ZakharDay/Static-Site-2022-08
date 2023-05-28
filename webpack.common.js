@@ -106,7 +106,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/search.html',
       filename: './search.html',
-      chunks: ['search']
+      chunks: ['search', 'searchBar']
     }),
 
     new HtmlWebpackPlugin({
@@ -192,7 +192,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/spaceobjects/moon.html',
       filename: './spaceobjects/moon.html',
-      chunks: ['index']
+      chunks: ['index', 'searchBar']
     }),
 
     // Partials

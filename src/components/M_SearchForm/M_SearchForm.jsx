@@ -7,34 +7,46 @@ import A_Button from '../A_Button/A_Button.jsx'
 export default class M_SearchForm extends React.Component {
   constructor(props) {
     super(props)
-
-    this.state = {
-      value: ''
-    }
   }
 
-  handleInput = (value) => {
-    this.setState({
-      value
-    })
-  }
+  renderResetButton = () => {
+    const { handleSearchInput } = this.props
 
-  handleSubmit = () => {
-    console.log('Submit')
+    return (
+      <A_Button
+        type="resetField"
+        text="X"
+        disabled={false}
+        handleClick={() => handleSearchInput('')}
+      />
+    )
   }
 
   render() {
-    const { value } = this.state
+    const {
+      isSearchButtonDisabled,
+      searchInputValue,
+      handleSearchInput,
+      handleSearchSubmit
+    } = this.props
 
     return (
       <div className="M_SearchForm">
         <A_Input
-          value={value}
-          handleInput={this.handleInput}
-          handleSubmit={this.handleSubmit}
+          value={searchInputValue}
+          placeholder="Search posts"
+          handleInput={handleSearchInput}
+          handleSubmit={handleSearchSubmit}
         />
 
-        <A_Button text="Search" handleClick={this.handleSubmit} />
+        {searchInputValue != '' && this.renderResetButton()}
+
+        <A_Button
+          type="primary"
+          text="Search"
+          disabled={isSearchButtonDisabled}
+          handleClick={handleSearchSubmit}
+        />
       </div>
     )
   }

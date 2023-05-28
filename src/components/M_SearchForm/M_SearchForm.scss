@@ -1,0 +1,17 @@
+.M_SearchForm {
+  position: relative;
+  display: flex;
+
+  .A_Input {
+    width: 200px;
+  }
+
+  .A_Button {
+    &.resetField {
+      position: absolute;
+      top: 12px;
+      left: 180px;
+      cursor: pointer;
+    }
+  }
+}
