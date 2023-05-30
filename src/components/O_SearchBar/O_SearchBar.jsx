@@ -3,7 +3,7 @@ import React from 'react'
 import { getPostTeasers } from '../../search_data.js'
 
 import M_SearchForm from '../M_SearchForm/M_SearchForm.jsx'
-import M_PostTeaser from '../M_PostTeaser/M_PostTeaser.jsx'
+import M_PostSuggestion from '../M_PostSuggestion/M_PostSuggestion.jsx'
 
 const addressPart = ':8080/'
 // const addressPart = '.adc.ac/'
@@ -12,10 +12,12 @@ export default class O_SearchBar extends React.Component {
   constructor(props) {
     super(props)
 
+    const { searchInputValue } = props
+
     this.state = {
       isSearchButtonDisabled: true,
-      searchInputValue: '',
-      postTeasers: []
+      postTeasers: [],
+      searchInputValue
     }
   }
 
@@ -56,7 +58,7 @@ export default class O_SearchBar extends React.Component {
     }
   }
 
-  renderPostTeasers = () => {
+  renderPostSuggestions = () => {
     const { postTeasers } = this.state
     const searchInputValue = this.state.searchInputValue.toLowerCase()
     const nbspRegex = /[\u202F\u00A0]/gm
@@ -79,7 +81,7 @@ export default class O_SearchBar extends React.Component {
         description.includes(searchInputValue)
       ) {
         posts.push(
-          <M_PostTeaser
+          <M_PostSuggestion
             title={postTeaser.title}
             description={postTeaser.description}
             url={postTeaser.url}
@@ -89,7 +91,7 @@ export default class O_SearchBar extends React.Component {
       }
     })
 
-    return <div className="C_PostTeasers">{posts}</div>
+    return <div className="C_PostSuggestions">{posts}</div>
   }
 
   render() {
@@ -104,7 +106,9 @@ export default class O_SearchBar extends React.Component {
           handleSearchSubmit={this.handleSearchSubmit}
         />
 
-        {searchInputValue.length >= 3 && this.renderPostTeasers()}
+        {searchInputValue.length >= 3 &&
+          !isSearchButtonDisabled &&
+          this.renderPostSuggestions()}
       </div>
     )
   }

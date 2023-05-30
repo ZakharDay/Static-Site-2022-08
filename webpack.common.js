@@ -111,6 +111,12 @@ module.exports = {
     }),
 
     new HtmlWebpackPlugin({
+      template: './src/search.html',
+      filename: './search.html',
+      chunks: ['search', 'searchBar']
+    }),
+
+    new HtmlWebpackPlugin({
       template: './src/react-basics.html',
       filename: './react-basics.html',
       chunks: ['reactBasics']

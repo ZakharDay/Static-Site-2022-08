@@ -13,4 +13,15 @@ function sample(array) {
   return array[Math.floor(Math.random() * array.length)]
 }
 
-export { generateHash }
+function getSearchRequest() {
+  const url = new URL(window.location.href)
+  const searchParams = new URLSearchParams(url.search)
+
+  if (searchParams.has('request')) {
+    return searchParams.get('request')
+  } else {
+    return ''
+  }
+}
+
+export { generateHash, getSearchRequest }

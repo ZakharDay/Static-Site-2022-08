@@ -2,6 +2,6 @@
 @import 'stylesheets/fonts.scss';
 @import 'stylesheets/vars.scss';
 @import 'stylesheets/basics.scss';
+@import 'stylesheets/main.scss';
 
-@import 'stylesheets/search-vanilla-js.scss';
 @import 'stylesheets/menubar.scss';
