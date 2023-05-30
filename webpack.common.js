@@ -17,7 +17,7 @@ module.exports = {
     searchVanillaJS: './src/search-vanilla-js.js',
     search: './src/search.jsx',
     reactBasics: './src/react-basics.jsx',
-    searchBar: './src/searchbar.jsx'
+    menubar: './src/menubar.jsx'
   },
   output: {
     filename: '[name].[contenthash].js',
@@ -101,19 +101,19 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: './index.html',
-      chunks: ['index', 'searchBar']
+      chunks: ['index', 'menubar']
     }),
 
     new HtmlWebpackPlugin({
       template: './src/search-vanilla-js.html',
       filename: './search-vanilla-js.html',
-      chunks: ['searchVanillaJS', 'searchBar']
+      chunks: ['searchVanillaJS', 'menubar']
     }),
 
     new HtmlWebpackPlugin({
       template: './src/search.html',
       filename: './search.html',
-      chunks: ['search', 'searchBar']
+      chunks: ['search', 'menubar']
     }),
 
     new HtmlWebpackPlugin({
@@ -180,26 +180,26 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/spaceships.html',
       filename: './spaceships.html',
-      chunks: ['index']
+      chunks: ['index', 'menubar']
     }),
 
     new HtmlWebpackPlugin({
       template: './src/spaceobjects.html',
       filename: './spaceobjects.html',
-      chunks: ['index']
+      chunks: ['index', 'menubar']
     }),
 
     // Article
     new HtmlWebpackPlugin({
       template: './src/spaceships/buran.html',
       filename: './spaceships/buran.html',
-      chunks: ['index']
+      chunks: ['index', 'menubar']
     }),
 
     new HtmlWebpackPlugin({
       template: './src/spaceobjects/moon.html',
       filename: './spaceobjects/moon.html',
-      chunks: ['index', 'searchBar']
+      chunks: ['index', 'menubar']
     }),
 
     // Partials
