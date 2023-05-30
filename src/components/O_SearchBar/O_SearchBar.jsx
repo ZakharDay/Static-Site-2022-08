@@ -49,7 +49,6 @@ export default class O_SearchBar extends React.Component {
     const { searchInputValue } = this.state
 
     if (searchInputValue.length >= 3) {
-      const { searchInputValue } = this.state
       const url = this.getPathFromUrl(window.location.href)
 
       window.location.href =

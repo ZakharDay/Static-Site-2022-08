@@ -1,4 +1,4 @@
-import './search.css'
+import './search-vanilla-js.css'
 import { getPostTeasers } from './search_data.js'
 
 let content
