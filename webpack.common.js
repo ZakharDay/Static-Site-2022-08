@@ -3,9 +3,18 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin')
 const StaticSourceData = require('static-source-data')
+const SitemapPlugin = require('sitemap-webpack-plugin').default
 
 const webpack = require('webpack')
 const path = require('path')
+
+const paths = [
+  '/',
+  '/spaceships.html',
+  '/spaceobjects.html',
+  '/spaceobjects/moon.html',
+  '/spaceships/buran.html'
+]
 
 module.exports = {
   entry: {
@@ -94,6 +103,8 @@ module.exports = {
     ]
   },
   plugins: [
+    new SitemapPlugin({ base: 'https://adc.ac', paths }),
+
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css',
       chunkFilename: '[id].[contenthash].css'
