@@ -1,4 +1,3 @@
-import './index.css'
 import Cookies from 'js-cookie'
 
 let selectOptions = [

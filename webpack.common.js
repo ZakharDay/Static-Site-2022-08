@@ -2,13 +2,15 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin')
+const StaticSourceData = require('static-source-data')
 
 const webpack = require('webpack')
 const path = require('path')
 
 module.exports = {
   entry: {
-    index: './src/index.js',
+    styles: './src/styles.js',
+    index: './src/index.jsx',
     htmlcss: './src/htmlcss.js',
     dictionary: './src/dictionary.js',
     jsbasics: './src/jsbasics.js',
@@ -97,49 +99,63 @@ module.exports = {
       chunkFilename: '[id].[contenthash].css'
     }),
 
+    new StaticSourceData({
+      indexData: {
+        url: 'https://api.airtable.com/v0/appwcTAYHNcwgwLzW/Homepage',
+        headers: {
+          Authorization:
+            'Bearer patmmWEYvIcdQIv63.be336c1827dde9111bdbb74b62d1c2f0e753092cbb2cb61cdca9341601acd005'
+        }
+      }
+    }),
+
     // Index
     new HtmlWebpackPlugin({
       template: './src/index.ejs',
       filename: './index.html',
-      chunks: ['index', 'menubar']
+      chunks: ['styles', 'menubar', 'index']
     }),
 
     // Articles
     new HtmlWebpackPlugin({
       template: './src/spaceships.ejs',
       filename: './spaceships.html',
-      chunks: ['index', 'menubar']
+      chunks: ['styles', 'menubar']
     }),
 
     new HtmlWebpackPlugin({
       template: './src/spaceobjects.ejs',
       filename: './spaceobjects.html',
-      chunks: ['index', 'menubar']
+      chunks: ['styles', 'menubar']
     }),
 
     // Article
     new HtmlWebpackPlugin({
       template: './src/spaceships/buran.ejs',
       filename: './spaceships/buran.html',
-      chunks: ['index', 'menubar']
+      chunks: ['styles', 'menubar']
     }),
 
     new HtmlWebpackPlugin({
       template: './src/spaceobjects/moon.ejs',
       filename: './spaceobjects/moon.html',
-      chunks: ['index', 'menubar']
+      chunks: ['styles', 'menubar']
     }),
+
+    new HtmlWebpackPlugin({
+      template: './src/search.ejs',
+      filename: './search.html',
+      chunks: ['styles', 'menubar', 'search']
+    }),
+
+    //
+    //
+    //
 
     new HtmlWebpackPlugin({
       template: './src/search-vanilla-js.html',
       filename: './search-vanilla-js.html',
       chunks: ['searchVanillaJS']
-    }),
-
-    new HtmlWebpackPlugin({
-      template: './src/search.html',
-      filename: './search.html',
-      chunks: ['search']
     }),
 
     new HtmlWebpackPlugin({

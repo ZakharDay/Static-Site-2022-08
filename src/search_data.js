@@ -34,4 +34,17 @@ function getPostTeasers() {
   })
 }
 
-export { getPostTeasers }
+function getHomepageTeasers() {
+  return new Promise((resolve, reject) => {
+    const content = []
+
+    base('Homepage')
+      .select({ maxRecords: 100 })
+      .firstPage()
+      .then((result) => {
+        resolve({ records: result })
+      })
+  })
+}
+
+export { getPostTeasers, getHomepageTeasers }

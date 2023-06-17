@@ -45,19 +45,20 @@ export default class S_MenuBar extends React.Component {
   }
 
   handleSearchSubmit = () => {
-    const { prerender } = this.props
+    const { prerender, homeURL } = this.props
     const { searchInputValue } = this.state
 
     if (prerender == undefined) {
       if (searchInputValue.length >= 3) {
-        const url = this.getPathFromUrl(window.location.href)
         window.location.href =
-          url + addressPart + 'search.html?request=' + searchInputValue
+          homeURL + 'search.html?request=' + searchInputValue
       }
     }
   }
 
   render() {
+    console.log(Array.isArray([]))
+
     const { prerender, homeURL, menuItems } = this.props
     const { isSearchButtonDisabled, searchInputValue, postTeasers } = this.state
     const currentURL = prerender == undefined ? window.location.href : ''

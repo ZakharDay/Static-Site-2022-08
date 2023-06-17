@@ -1,5 +1,3 @@
-import './index.css'
-
 let currentSlide = 0
 
 function initModal() {
