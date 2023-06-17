@@ -99,21 +99,47 @@ module.exports = {
 
     // Index
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './src/index.ejs',
       filename: './index.html',
+      chunks: ['index', 'menubar']
+    }),
+
+    // Articles
+    new HtmlWebpackPlugin({
+      template: './src/spaceships.ejs',
+      filename: './spaceships.html',
+      chunks: ['index', 'menubar']
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/spaceobjects.ejs',
+      filename: './spaceobjects.html',
+      chunks: ['index', 'menubar']
+    }),
+
+    // Article
+    new HtmlWebpackPlugin({
+      template: './src/spaceships/buran.ejs',
+      filename: './spaceships/buran.html',
+      chunks: ['index', 'menubar']
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/spaceobjects/moon.ejs',
+      filename: './spaceobjects/moon.html',
       chunks: ['index', 'menubar']
     }),
 
     new HtmlWebpackPlugin({
       template: './src/search-vanilla-js.html',
       filename: './search-vanilla-js.html',
-      chunks: ['searchVanillaJS', 'menubar']
+      chunks: ['searchVanillaJS']
     }),
 
     new HtmlWebpackPlugin({
       template: './src/search.html',
       filename: './search.html',
-      chunks: ['search', 'menubar']
+      chunks: ['search']
     }),
 
     new HtmlWebpackPlugin({
@@ -176,46 +202,11 @@ module.exports = {
       chunks: ['adcgame']
     }),
 
-    // Articles
-    new HtmlWebpackPlugin({
-      template: './src/spaceships.html',
-      filename: './spaceships.html',
-      chunks: ['index', 'menubar']
-    }),
-
-    new HtmlWebpackPlugin({
-      template: './src/spaceobjects.html',
-      filename: './spaceobjects.html',
-      chunks: ['index', 'menubar']
-    }),
-
-    // Article
-    new HtmlWebpackPlugin({
-      template: './src/spaceships/buran.html',
-      filename: './spaceships/buran.html',
-      chunks: ['index', 'menubar']
-    }),
-
-    new HtmlWebpackPlugin({
-      template: './src/spaceobjects/moon.html',
-      filename: './spaceobjects/moon.html',
-      chunks: ['index', 'menubar']
-    }),
-
     // Partials
     new HtmlWebpackPartialsPlugin([
       {
         path: path.join(__dirname, './src/partials/analytics.html'),
         location: 'analytics',
-        template_filename: '*',
-        priority: 'replace'
-      }
-    ]),
-
-    new HtmlWebpackPartialsPlugin([
-      {
-        path: path.join(__dirname, './src/partials/menubar.html'),
-        location: 'menubar',
         template_filename: '*',
         priority: 'replace'
       }

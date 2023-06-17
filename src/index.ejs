@@ -1,3 +1,5 @@
+<% const { menubar } = require('./menubar.js') %>
+
 <!DOCTYPE html>
 <html lang="ru" dir="ltr">
   <head>
@@ -6,7 +8,7 @@
   </head>
 
   <body class="index">
-    <menubar></menubar>
+    <div class="S_MenuBar"><%= menubar %></div>
 
     <div class="modal">
       <div class="modalFader">
@@ -60,7 +62,7 @@
       <div class="O_ContentItem" data-tags="криптовалюта">
         <img
           class="A_ContentItemCover"
-          src="./images/index/Randomatizm-11575e.png"
+          src="<%= require('./images/index/Randomatizm-11575e.png') %>"
         />
 
         <div class="C_ContentItemTags">
@@ -79,7 +81,7 @@
       <div class="O_ContentItem" data-tags="инвестиции">
         <img
           class="A_ContentItemCover"
-          src="./images/index/Randomatizm-1373ac.png"
+          src="<%= require('./images/index/Randomatizm-1373ac.png') %>"
         />
 
         <div class="C_ContentItemTags">
@@ -98,7 +100,7 @@
       <div class="O_ContentItem" data-tags="криптовалюта">
         <img
           class="A_ContentItemCover"
-          src="./images/index/Randomatizm-42cdde.png"
+          src="<%= require('./images/index/Randomatizm-42cdde.png') %>"
         />
 
         <div class="C_ContentItemTags">
@@ -117,7 +119,7 @@
       <div class="O_ContentItem" data-tags="майнинг,криптовалюта">
         <img
           class="A_ContentItemCover"
-          src="./images/index/Randomatizm-4c1947.png"
+          src="<%= require('./images/index/Randomatizm-4c1947.png') %>"
         />
 
         <div class="C_ContentItemTags">
@@ -137,7 +139,7 @@
       <div class="O_ContentItem" data-tags="криптовалюта,инвестиции">
         <img
           class="A_ContentItemCover"
-          src="./images/index/Randomatizm-585930.png"
+          src="<%= require('./images/index/Randomatizm-585930.png') %>"
         />
 
         <div class="C_ContentItemTags">
@@ -157,7 +159,7 @@
       <div class="O_ContentItem" data-tags="криптовалюта,инвестиции">
         <img
           class="A_ContentItemCover"
-          src="./images/index/Randomatizm-bc42b7.png"
+          src="<%= require('./images/index/Randomatizm-bc42b7.png') %>"
         />
 
         <div class="C_ContentItemTags">
@@ -177,7 +179,7 @@
       <div class="O_ContentItem" data-tags="криптовалюта,инвестиции,ICO">
         <img
           class="A_ContentItemCover"
-          src="./images/index/Randomatizm-c6c8f0.png"
+          src="<%= require('./images/index/Randomatizm-c6c8f0.png') %>"
         />
 
         <div class="C_ContentItemTags">
@@ -198,7 +200,7 @@
       <div class="O_ContentItem" data-tags="криптовалюта,блокчейн">
         <img
           class="A_ContentItemCover"
-          src="./images/index/Randomatizm-d57abb.png"
+          src="<%= require('./images/index/Randomatizm-d57abb.png') %>"
         />
 
         <div class="C_ContentItemTags">
@@ -218,7 +220,7 @@
       <div class="O_ContentItem" data-tags="криптовалюта,инвестиции">
         <img
           class="A_ContentItemCover"
-          src="./images/index/Randomatizm-fc7cb2.png"
+          src="<%= require('./images/index/Randomatizm-fc7cb2.png') %>"
         />
 
         <div class="C_ContentItemTags">

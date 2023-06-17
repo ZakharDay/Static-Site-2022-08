@@ -1,14 +1,15 @@
-import './A_MainMenuItem.scss'
+// import './A_Link.scss'
 import classnames from 'classnames'
 import React from 'react'
 
-export default class A_MainMenuItem extends React.Component {
+export default class A_Link extends React.Component {
   render() {
-    const { text, url, current } = this.props
+    const { text, type, active, url } = this.props
 
     const classes = classnames({
-      A_MainMenuItem: true,
-      current: current
+      A_Link: true,
+      [`${type}`]: true,
+      active: active
     })
 
     return (

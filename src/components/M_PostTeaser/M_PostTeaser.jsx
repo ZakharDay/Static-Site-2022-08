@@ -1,4 +1,4 @@
-import './M_PostTeaser.scss'
+// import './M_PostTeaser.scss'
 import React from 'react'
 
 import A_Image from '../A_Image/A_Image.jsx'

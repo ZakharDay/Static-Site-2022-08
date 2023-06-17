@@ -1,4 +1,4 @@
-import './S_SearchContent.scss'
+// import './S_SearchContent.scss'
 import React from 'react'
 import { getPostTeasers } from '../../search_data.js'
 

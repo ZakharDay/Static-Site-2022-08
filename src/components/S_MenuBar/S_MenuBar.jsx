@@ -1,37 +1,15 @@
-import './S_MenuBar.scss'
+// import './S_MenuBar.scss'
 import React from 'react'
 import { getPostTeasers } from '../../search_data.js'
 
-import A_MainMenuItem from '../A_MainMenuItem/A_MainMenuItem.jsx'
+import A_Link from '../A_Link/A_Link.jsx'
 import O_SearchBar from '../O_SearchBar/O_SearchBar.jsx'
-
-const addressPart = ':8080/'
-// const addressPart = '.adc.ac/'
-
-const menu = [
-  {
-    text: 'Element 1',
-    url: '/spaceobjects.html'
-  },
-  {
-    text: 'Element 2',
-    url: '/spaceobjects/moon.html'
-  },
-  {
-    text: 'Element 3',
-    url: '/spaceships.html'
-  },
-  {
-    text: 'Element 4',
-    url: '/spaceships/buran.html'
-  }
-]
 
 export default class S_MenuBar extends React.Component {
   constructor(props) {
     super(props)
 
-    const { searchInputValue } = props
+    const searchInputValue = props.prerender ? '' : props.searchInputValue
 
     this.state = {
       isSearchButtonDisabled: true,
@@ -67,32 +45,42 @@ export default class S_MenuBar extends React.Component {
   }
 
   handleSearchSubmit = () => {
+    const { prerender } = this.props
     const { searchInputValue } = this.state
 
-    if (searchInputValue.length >= 3) {
-      const url = this.getPathFromUrl(window.location.href)
-
-      window.location.href =
-        url + addressPart + 'search.html?request=' + searchInputValue
+    if (prerender == undefined) {
+      if (searchInputValue.length >= 3) {
+        const url = this.getPathFromUrl(window.location.href)
+        window.location.href =
+          url + addressPart + 'search.html?request=' + searchInputValue
+      }
     }
   }
 
   render() {
+    const { prerender, homeURL, menuItems } = this.props
     const { isSearchButtonDisabled, searchInputValue, postTeasers } = this.state
-    const url = this.getPathFromUrl(window.location.href)
+    const currentURL = prerender == undefined ? window.location.href : ''
     const menuElements = []
 
-    menu.forEach((menuItem, i) => {
+    menuItems.forEach((menuItem, i) => {
       const { text, url } = menuItem
+      const linkURL = homeURL + url
 
       menuElements.push(
-        <A_MainMenuItem text={text} url={url} current={false} key={i} />
+        <A_Link
+          text={text}
+          type="mainMenuItem"
+          active={linkURL == currentURL}
+          url={linkURL}
+          key={i}
+        />
       )
     })
 
     return (
       <>
-        <a href={url + addressPart}>Home</a>
+        <A_Link text="Home" type="menubarLogo" url={homeURL} active={false} />
 
         <div className="C_MainMenu">{menuElements}</div>
 

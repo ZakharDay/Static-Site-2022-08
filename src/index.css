@@ -4,12 +4,14 @@
 @import 'stylesheets/basics.scss';
 @import 'stylesheets/main.scss';
 
-@import 'stylesheets/index.scss';
-@import 'stylesheets/articles.scss';
-@import 'stylesheets/article.scss';
-@import 'stylesheets/menubar.scss';
-
-@import 'stylesheets/simplegrid.scss';
-@import 'stylesheets/modulargrid.scss';
-@import 'stylesheets/complexgrid.scss';
-@import 'stylesheets/ui.scss';
+@import 'components/A_Button/A_Button.scss';
+@import 'components/A_Image/A_Image.scss';
+@import 'components/A_Input/A_Input.scss';
+@import 'components/A_Link/A_Link.scss';
+@import 'components/A_Text/A_Text.scss';
+@import 'components/M_PostSuggestion/M_PostSuggestion.scss';
+@import 'components/M_PostTeaser/M_PostTeaser.scss';
+@import 'components/M_SearchForm/M_SearchForm.scss';
+@import 'components/O_SearchBar/O_SearchBar.scss';
+@import 'components/S_MenuBar/S_MenuBar.scss';
+@import 'components/S_SearchContent/S_SearchContent.scss';

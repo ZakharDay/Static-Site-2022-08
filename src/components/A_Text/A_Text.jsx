@@ -1,4 +1,4 @@
-import './A_Text.scss'
+// import './A_Text.scss'
 import classnames from 'classnames'
 import React from 'react'
 
