@@ -28,7 +28,8 @@ module.exports = {
     searchVanillaJS: './src/search-vanilla-js.js',
     search: './src/search.jsx',
     reactBasics: './src/react-basics.jsx',
-    menubar: './src/menubar.jsx'
+    menubar: './src/menubar.jsx',
+    'rails-integration': './src/rails-integration.js'
   },
   output: {
     filename: '[name].[contenthash].js',
@@ -157,6 +158,12 @@ module.exports = {
       template: './src/search.ejs',
       filename: './search.html',
       chunks: ['styles', 'menubar', 'search']
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/rails-integration.html',
+      filename: './rails-integration.html',
+      chunks: ['rails-integration']
     }),
 
     //
