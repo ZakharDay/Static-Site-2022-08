@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
     .then((response) => {
       response.json().then((data) => {
         console.log('RESPONSE', data)
-        renderPins(data)
+        renderPins(data.pins)
+        document.querySelector('form').setAttribute('action', data.new_url)
       })
     })
     .catch((error) => {
