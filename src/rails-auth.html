@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <analytics></analytics>
+  </head>
+
+  <body class="rails-intergation">
+    <form accept-charset="UTF-8" id="signInForm">
+      <div class="field">
+        <label for="user_email">Электронная почта</label><br />
+
+        <input
+          autofocus="autofocus"
+          autocomplete="email"
+          type="email"
+          value=""
+          name="user[email]"
+          id="user_email"
+        />
+      </div>
+
+      <div class="field">
+        <label for="user_password">Пароль</label><br />
+
+        <input
+          autocomplete="current-password"
+          type="password"
+          name="user[password]"
+          id="user_password"
+        />
+      </div>
+
+      <div class="actions">
+        <input
+          type="submit"
+          name="commit"
+          value="Log in"
+          data-disable-with="Log in"
+        />
+      </div>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+body.rails-spa {
+  #signOutLink,
+  #pinForm,
+  #pinsSection,
+  #signInForm,
+  #signUpForm {
+    display: none;
+  }
+
+  &.signIn {
+    #signOutLink,
+    #pinForm,
+    #pinsSection {
+      display: none;
+    }
+
+    #signInForm,
+    #signUpForm {
+      display: block;
+    }
+  }
+
+  &.signedIn {
+    #signOutLink,
+    #pinForm,
+    #pinsSection {
+      display: block;
+    }
+
+    #signInForm,
+    #signUpForm {
+      display: none;
+    }
+  }
+
+  #signOutLink,
+  #pinForm,
+  #pinsSection,
+  #signInForm,
+  #signUpForm {
+    margin: 100px;
+  }
+
+  .pin {
+    display: block;
+    text-decoration: none;
+    width: 400px;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    margin-top: 20px;
+    color: black;
+    padding: 20px;
+
+    .pinTitle {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .pinDescription {
+      margin-top: 12px;
+      line-height: 1.4;
+    }
+
+    .pinImage {
+      width: 100%;
+      margin-top: 12px;
+    }
+  }
+}

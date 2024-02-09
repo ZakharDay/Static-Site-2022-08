@@ -29,7 +29,9 @@ module.exports = {
     search: './src/search.jsx',
     reactBasics: './src/react-basics.jsx',
     menubar: './src/menubar.jsx',
-    'rails-integration': './src/rails-integration.js'
+    'rails-integration': './src/rails-integration.js',
+    'rails-auth': './src/rails-auth.js',
+    'rails-spa': './src/rails-spa.js'
   },
   output: {
     filename: '[name].[contenthash].js',
@@ -164,6 +166,18 @@ module.exports = {
       template: './src/rails-integration.html',
       filename: './rails-integration.html',
       chunks: ['rails-integration']
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/rails-auth.html',
+      filename: './rails-auth.html',
+      chunks: ['rails-auth']
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/rails-spa.html',
+      filename: './rails-spa.html',
+      chunks: ['rails-spa']
     }),
 
     //

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <analytics></analytics>
+  </head>
+
+  <body class="rails-spa signIn">
+    <a href="" id="signOutLink">Sign Out</a>
+
+    <form accept-charset="UTF-8" id="signInForm">
+      <div class="field">
+        <label for="user_email">Электронная почта</label><br />
+
+        <input
+          autofocus="autofocus"
+          autocomplete="email"
+          type="email"
+          value=""
+          name="user[email]"
+          id="user_email"
+        />
+      </div>
+
+      <div class="field">
+        <label for="user_password">Пароль</label><br />
+
+        <input
+          autocomplete="current-password"
+          type="password"
+          name="user[password]"
+          id="user_password"
+        />
+      </div>
+
+      <div class="actions">
+        <input
+          type="submit"
+          name="commit"
+          value="Log in"
+          data-disable-with="Log in"
+        />
+      </div>
+    </form>
+
+    <form accept-charset="UTF-8" id="signUpForm">
+      <div class="field">
+        <label for="user_email">Электронная почта</label><br />
+        <input
+          autofocus="autofocus"
+          autocomplete="email"
+          type="email"
+          value=""
+          name="user[email]"
+          id="new_user_email"
+        />
+      </div>
+
+      <div class="field">
+        <label for="user_password">Пароль</label>
+        <em>(6 characters minimum)</em>
+        <br />
+        <input
+          autocomplete="new-password"
+          type="password"
+          name="user[password]"
+          id="new_user_password"
+        />
+      </div>
+
+      <div class="field">
+        <label for="user_password_confirmation">Подтверждение пароля</label
+        ><br />
+        <input
+          autocomplete="new-password"
+          type="password"
+          name="user[password_confirmation]"
+          id="new_user_password_confirmation"
+        />
+      </div>
+
+      <div class="actions">
+        <input
+          type="submit"
+          name="commit"
+          value="Sign up"
+          data-disable-with="Sign up"
+        />
+      </div>
+    </form>
+
+    <form accept-charset="UTF-8" id="pinForm">
+      <div>
+        <label style="display: block" for="pin_pin_image">Pin image</label>
+        <input type="file" name="pin[pin_image]" id="pin_pin_image" />
+      </div>
+
+      <div>
+        <label style="display: block" for="pin_title">Title</label>
+        <input type="text" name="pin[title]" id="pin_title" />
+      </div>
+
+      <div>
+        <label style="display: block" for="pin_description">Description</label>
+        <textarea name="pin[description]" id="pin_description"></textarea>
+      </div>
+
+      <div>
+        <input
+          type="submit"
+          name="commit"
+          value="Создать Pin"
+          data-disable-with="Создать Pin"
+        />
+      </div>
+    </form>
+
+    <section id="pinsSection"></section>
+  </body>
+</html>
